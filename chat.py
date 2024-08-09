@@ -3,7 +3,7 @@ import os
 import azure.identity
 import openai
 from dotenv import load_dotenv
-from utils.func import write_to_file
+from utils.func import write_to_file, append_to_file
 
 
 # Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
@@ -41,19 +41,31 @@ else:
     MODEL_NAME = os.getenv("OPENAI_MODEL")
 
 
+# Important variables 
+fileNameMD = "latest.md"
+syscontent = "You are a helpful coding assistant that develops solutions and provides references for support."
+content = "Write a simple C++ program and a Dockerfile to run it?"
+
 response = client.chat.completions.create(
     model=MODEL_NAME,
     temperature=0.7,
     messages=[
-        {"role": "system", "content": "You are a helpful coding assistant that develops solutions and provides references for support."},
-        {"role": "user", "content": "Develope a python3 function that takes a string argument, like print() and writes the content into a local file named text.md? "},
+        {"role": "system", "content": syscontent},
+        {"role": "user", "content": content},
     ],
     max_tokens=500
 )
 
-print("Response: ")
+print(f'### {content}')
 print(response.choices[0].message.content)
-# Use the function
 
-write_to_file(response.choices[0].message.content)
+# Use helper functions
+
+if os.path.exists(fileNameMD):
+    append_to_file(f'\n\n\n #### {content} \n\n')
+    append_to_file(response.choices[0].message.content)
+else:
+    write_to_file(f'### {content} \n\n')
+    append_to_file(response.choices[0].message.content)
+
 
