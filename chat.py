@@ -43,9 +43,10 @@ response = client.chat.completions.create(
     model=MODEL_NAME,
     temperature=0.7,
     messages=[
-        {"role": "system", "content": "You are a helpful assistant that makes lots of cat references and uses emojis."},
-        {"role": "user", "content": "Write a haiku about a developer who uses AI "},
+        {"role": "system", "content": "You are a helpful coding assistant that develops solutions and provides references for support."},
+        {"role": "user", "content": "Developer a simple Rust application and a companion Dockerfile to run it as well."},
     ],
+    max_tokens=500
 )
 
 print("Response: ")
