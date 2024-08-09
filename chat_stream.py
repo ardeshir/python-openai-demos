@@ -36,12 +36,12 @@ else:
 # Important variables 
 fileNameMD = "latest.md"
 syscontent = "You are a helpful coding assistant that develops solutions and provides references for support."
-usercontent = "Write a simple C++ program and a Dockerfile to run it?"
+usercontent = "Write a simple Rust Server that can server MarkDown files from wwwroot directory, and a Dockerfile to run this program?"
 
 completion = client.chat.completions.create(
     model=MODEL_NAME,
     temperature=0.7,
-    max_tokens=500,
+    max_tokens=800,
     n=1,
     messages=[
         {"role": "system", "content": syscontent},
