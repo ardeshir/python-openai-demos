@@ -3,6 +3,8 @@ import os
 import azure.identity
 import openai
 from dotenv import load_dotenv
+from utils.func import write_to_file
+
 
 # Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
 load_dotenv(override=True)
@@ -44,10 +46,14 @@ response = client.chat.completions.create(
     temperature=0.7,
     messages=[
         {"role": "system", "content": "You are a helpful coding assistant that develops solutions and provides references for support."},
-        {"role": "user", "content": "Developer a simple Rust application and a companion Dockerfile to run it as well."},
+        {"role": "user", "content": "Develope a python3 function that takes a string argument, like print() and writes the content into a local file named text.md? "},
     ],
     max_tokens=500
 )
 
 print("Response: ")
 print(response.choices[0].message.content)
+# Use the function
+
+write_to_file(response.choices[0].message.content)
+
